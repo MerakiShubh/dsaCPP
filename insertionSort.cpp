@@ -1,0 +1,50 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+// void sort(vector<int> &v){
+//   for(int i = 1; i<=v.size() - 1; i++){
+//       int initial = 0;
+//       while(initial < i){
+//           if(v[initial] > v[i]){
+//               swap(v[initial], v[i]);
+//               initial++;
+//           }else{
+//               initial++;
+//           }
+//       }
+//   }
+// }
+
+
+void insertionSort(vector<int> &v){
+    for(int i = 1; i < v.size(); i++){
+        int key = v[i];
+        int j = i - 1;
+
+        while(j >= 0 && v[j] > key){
+            v[j + 1] = v[j];
+            j--;
+        }
+        v[j + 1] = key;
+    }
+}
+
+
+int main() {
+  
+   vector<int> v = {2, 8, 1, 7, 6, 3, 5, 9};
+   
+//   sort(v);
+
+insertionSort(v);
+   
+  cout << "sorted: " << endl;
+   
+   for(int val : v){
+       cout << val << " ";
+   }
+   
+
+    return 0;
+}
