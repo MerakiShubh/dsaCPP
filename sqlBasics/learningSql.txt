@@ -1,0 +1,136 @@
+1. mysql -u shubh -p
+2. Show Databases;
+3. CREATE DATABASE temp;
+4. Use temp;
+5. CREATE TABLE student (
+    -> id INT Primary KEY,
+    -> name VARCHAR(255)
+    -> );
+6. Describe table student;
+7. INSERT INTO student values(1, "ankit");
+8. INSERT INTO student values(2, "shubh"), (3, "aakash");
+9. SELECT * FROM student;
+
+10. CHAR  ---> string (0 - 255) ---> fixed size --> 225 (
+    VARCHAR ----> string (0 - 255)  ---> variablle size --> (better space optimization)
+    TINYTEXT ---> string
+    TEXT  ---> string
+    BLOB ---> binary large object ---> used for files
+    LONGTEXT ---> string
+    INT ---> interger
+    DBOUBLE --> decimal --> 24 TO 53 BYTE
+    ENUM ---. one of the prset value 
+    SET ---> One or many perset value 
+    BOOLEAN ---> 0/1
+    
+ 11. Datatype has signed and unsignend feature as well
+ 
+ 12. Type of sql commands
+     i> DDL (Data defination languge) ---> Use to define table or relations
+     	CREATE, ALTER TABLE, DROP, TRUNCATE, RENAME
+   
+     ii> DRL/DQL (Data retrieval/query language)
+     	 SELECT
+
+     iii> DML (Data modificaton language)
+     	  INSERT, UPDATE, DELETE
+     	 
+      iv> DCL (Data Control Language)
+      	  GRANT, REVOKE
+      	  
+       v> TCL (Transaction control language)
+          START TRANSACTION, COMMIT, ROLLBACK, SAVEPOINT
+
+1. DDL
+	i> CREATE DATABASE IF NOT EXISTS db_name;
+	ii> USE db_name;
+	iii> DROP DATABASE IF EXISTS db_name;
+	iv> SHOW DATABASES;
+	 v> SHOW TABLES;
+	 vi> INSERT INTO table_name
+attribute --->	(id, name, salary) VALUES
+	 	(id_1, name_1, salary_1),
+	 	(id_2, name_2, salary_2);
+	 	
+2. DQL 
+
+#FROM CLAUSE ------->
+
+	i> SELECT * FROM Worker;
+	ii> SELECT Salary FROM Worker; ---> to extract data of specific column
+	
+#Order of Execution right to left   <--------
+	eg. SELECT <column1, column2> FROM <table_name>
+	
+#SELECT keyword without using FROM clause
+	Yes, by using DUAL Tables. ---> Dummy tables crated by RDBMS software.
+	eg. Select now 
+	    Select 44 + 11;
+	    Select lcase("SHUBHAM");
+	    
+#WHERE CLAUSE -------------> Reduce rows based on given condition
+    select * from table_name Where attribute_name operator condition
+eg. select * from Worker Where Salary > 80000;
+    operators -> =, >, <, >=, <=, <>/!=, BETWEEN, LIKE, IN, is NULL
+
+i> select * from Worker Where Departement = 'HR';
+ii> select * from Worker from Salary Between 100000 And 300000
+iii> select * from Worker Where Department = 'HR' OR Department = 'Admin';
+iv>  select * from Worker Where Department Not In ("HR", "Admin");
+v> select * from Wroker Where Salary > 80000;
+vi> select * from Worker Where First_name Like "%pu%";
+vii> select * from Worker Where First_name Like "_i%"; ---> i at second place if remove _ then i at first place
+
+
+#Sorting
+
+Select * from Worker Order By salary --> default ascending order
+select * from Worker order by Salary DESC;
+
+#Distinct values
+select distinct  Department from Worker;
+
+#Data Grouping ----> Aggregation
+find number of employees working in different department
+
+Aggregation function ----> Count, Sum, Min, Max, Avg
+
+#Group By
+
+i> select department from Worker group by department;
+
+COUNT("")--->
+select department, count(department) from Worker group by department;
+
+AVG("") --->
+select department, avg(salary) from Worker group by department
+
+min("") ---> 
+select department, avg(salary), min(salary) from Worker group by department;
+
+#Having 
+Having is used to filter in group by that means you can use it only with 
+group by
+
+eg. Department count having more then 2 workers
+select department, count(department) from Worker group by department having count(department) > 2;
+
+# HAVING is used to apply filters on groups while where is used apply filters on rows
+# HAVING is used by after GROUP BY while WHERE is used before GROUP BY.
+# Where can be used with SELECT, UPDATE AND DELETE keyword while GROUP BY is used only with select.
+
+Constraints 
+1. Unique 2. Check 3. Default 
+4. Primary key ----> Not Null, Unique, Onely one PK per table, it should be int
+5. Foreign key ---> refers pk of another table // FOREIGN KEY (cust_id) REFERENCES customer(id)
+
+Data modification language ---> 
+1.Insert 2.Update 3. Delete 4. Replace
+
+
+
+
+          
+
+ 	
+

@@ -1,0 +1,35 @@
+// A. Warm-up (filters, sorting)
+
+Q. List all products with price between 700 and 2000, sorted by price desc.
+Ans. select * from products where price between 700 and 2000 order by price desc;
+
+Q. Get distinct cities from which orders have been shipped (use orders.shipping_address_id → addresses.city).
+Ans. select a.city, o.status from addresses as a join orders as o on a.address_id = o.order_id where o.status = "shipped";
+
+Q. Show all customers whose first name starts with D.
+Ans. select * from customers where first_name like "D%";
+
+Q. Count how many products are active;
+Ans. select active, count("active") as active_count from products where active
+ = 1;
+ 
+Q. Find products with zero or low stock(<=10) from inventroy.
+Ans. select p.name, i.quantity from products as p join inventory as i on p.product_id = i.product_id where i.quantity <= 10;
+
+// B. Aggregations & GROUP BY
+
+Q. For each category, show total number of products.
+
+Ans. 
+//only count of prouct
+select c.name as category_name, count(p.product_id) as product_count from categories as c join products as p on c.category_id = p.category_id group by c.name;
+
+
+//count with product name 
+select c.name as category_name, count(p.product_id) as product_count, group_concat(p.name order by p.name SEPARATOR ', ') as product_name from categoriesns
+ as c join products as p on c.category_id = p.category_id group by c.name;
+
+
+
+
+
