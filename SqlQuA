@@ -82,6 +82,26 @@ Q16. For each customer, show total amount they paid across all orders (join orde
 
 Ans. select c.customer_id, concat(c.first_name, ' ', c.last_name) as customer_name, sum(p.amount) as total_amount from payments as p join orders as o on p.order_id = o.order_id join customers as c on c.customer_id = o.customer_id group by c.customer_id, customer_name;
 
-Q17. Which category has the highest total sales amount?
+*Q17. Which category has the highest total sales amount? (use order_items + products + categories).
 
-Ans. 
+
+Ans. select c.category_id, group_concat( p.name) as product_name, sum(o.quantity * unit_price) as total_sales from order_items as o join products as p on o.product_id = p.product_id join categories as c on p.category_id = c.category_id group by c.category_id order by total_sales desc limit 1;
+
+
+Q18. For each order, show item count (sum of quantities) and unique product count.
+
+Ans. select o.order_id, sum(o.quantity), count(distinct o.product_id) as product_count from order_items as o group by o.order_id;
+
+Q19. Show the current stock value per product (inventory.quantity * products.price).
+
+Ans. select p.name, p.product_id,  sum(i.quantity * p.price) as total_stock from inventory as i join products as p on i.product_id = p.product_id group by p.product_id, p.name;
+
+
+Q20. Find the top 3 products by number of reviews (ties allowed).
+
+Ans. select p.name,  r.product_id, count(*) as review_count from reviews as r join products as p on r.product_id = p.product_id group by r.product_id, p.name  order by review_count desc limit
+3;
+
+
+
+
