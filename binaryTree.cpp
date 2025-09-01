@@ -295,6 +295,84 @@ bool sumTree(node* root){
 }
 
 
+vector<vector<int>> zigZagTraversal(node* root){
+    
+    
+    // -------> method - 1 <--------
+    
+    // vector<vector<int>> result;
+    // vector<int> v;
+    // queue<node*> q;
+    // stack<node*> s;
+    
+    // q.push(root);
+    // q.push(nullptr);
+    // int count = 0;
+    
+    // while(!q.empty()){
+    //     node* temp = q.front();
+    //     q.pop();
+    //     if(!temp){
+    //         count++;
+    //         result.push_back(v);
+    //         v.clear();
+    //         if(!q.empty()){
+    //             q.push(nullptr);
+    //         }
+    //     }else{
+    //         if(count % 2 == 0){
+    //             cout << temp -> data << " ";
+                
+    //             v.push_back(temp -> data);
+                
+    //             if(temp -> left) s.push(temp -> left);
+    //             if(temp  -> right) s.push(temp -> right);
+                
+    //         }
+    //         if(count % 2 != 0){
+    //             cout << s.top() -> data << " ";
+    //             v.push_back(s.top() -> data);
+    //             s.pop();
+    //         }
+            
+    //         if(temp -> left) q.push(temp -> left);
+    //         if(temp -> right) q.push(temp -> right);
+    //     }
+    // }
+    // return result;
+    
+    
+    //---------> method - 2 <----------
+    
+    vector<vector<int>> result;
+    queue<node*> q;
+    bool leftToRight = true;
+    q.push(root);
+    
+    while(!q.empty()){
+       
+        int size = q.size();
+         vector<int> v(size);
+        for(int i = 0; i<size; i++){
+            node* temp = q.front();
+            q.pop();
+            
+            int index = leftToRight ? i : size - i - 1;
+            
+            v[index] = temp -> data;
+            
+           if(temp -> left) q.push(temp -> left);
+           if(temp -> right) q.push(temp -> right);
+        }
+        
+        result.push_back(v);
+        
+        leftToRight = !leftToRight;
+    }
+    
+    return result;
+}
+
 
 int main() {
     
@@ -305,9 +383,9 @@ int main() {
     // cout << "level order traversal: " << endl;
     // levelOrderTraversal(root);
     
-    cout << "reverse level oreder travesal: " << endl;
-    reverseLevelOrderTraversal(root);
-    cout << endl;
+    // cout << "reverse level oreder travesal: " << endl;
+    // reverseLevelOrderTraversal(root);
+    // cout << endl;
     
     // cout << "inorder traversal: " << endl;
     // inOrderTraversal(root);
@@ -332,7 +410,15 @@ int main() {
     // cout << "level order traversal: " << endl;
     // levelOrderTraversal(root);
     
-    cout << "balanced: " << isTreeBalanced(root) << endl;
+    // cout << "balanced: " << isTreeBalanced(root) << endl;
+    
+    cout << "zig zag traversal: " << endl;
+    vector<vector<int>> result = zigZagTraversal(root);
+    for(int i = 0; i<result.size(); i++){
+        for(int j = 0; j<result[i].size(); j++){
+            cout << result[i][j] << " ";
+        }
+    }
     
  
     //5 7 1 -1 -1 8 -1 -1 3 -1 2 -1 -1 
