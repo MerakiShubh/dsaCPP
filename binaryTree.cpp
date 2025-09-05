@@ -1,6 +1,7 @@
 #include <iostream>
 #include <queue>
 #include <stack>
+#include <bits/stdc++.h>
 using namespace std;
 
 class node{
@@ -409,6 +410,41 @@ vector<int> rightSideView(node* root){
     return result;
 }
 
+vector<int> topView(node* root){
+    vector<int> result;
+    if(!root) return result;
+    
+    map<int, int> m;
+    queue<pair<node*, int>> q;
+    q.push({root, 0});
+    
+    while(!q.empty()){
+        auto[temp, index] = q.front();
+        q.pop();
+        
+        if(!m[index]){
+            m[index] = temp -> data;
+        }
+        
+        if(temp -> left){
+            q.push({temp -> left, index - 1});
+        }
+        
+        if(temp -> right){
+            q.push({temp -> right, index + 1});
+        }
+    }
+    
+    for(auto it = m.begin(); it != m.end(); it++){
+        result.push_back(it -> second)
+        
+        cout << it -> second << " ";
+    }
+    
+    
+    return result;
+}
+
 int main() {
     
     node* root = NULL;
@@ -455,13 +491,16 @@ int main() {
     //     }
     // }
     
-    cout << "Right side view: " << endl;
+    // cout << "Right side view: " << endl;
+    // rightSideView(root);
     
-    rightSideView(root);
+    cout << "top view: " << endl;
+    topView(root);
     
  
     //5 7 1 -1 -1 8 -1 -1 3 -1 2 -1 -1 
     // 1 2 6 8 -1 -1 -1 -1 3 -1 4 -1 -1
+    // 1 2 4 -1 7 9 10 -1 -1 -1 -1 5 -1 -1 3 -1 6 8 -1 11 -1 -1 -1 
     return 0;
 }
 
