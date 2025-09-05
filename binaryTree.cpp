@@ -17,6 +17,7 @@ class node{
     }
 };
 
+
 node* buildTree(node* root){
     //create node
     int data;
@@ -373,6 +374,40 @@ vector<vector<int>> zigZagTraversal(node* root){
     return result;
 }
 
+void righSideViewHelper(node* root, vector<int> &result, int currDepth){
+    
+    if(!root) return;
+    
+    if(currDepth == result.size()){
+        result.push_back(root -> data);
+    }
+    
+    if(root -> right){
+        // currDepth++; ---> This changes the vlaue of current depth in current recursion stack
+        // righSideViewHelper(root -> right, result, currDepth);
+        righSideViewHelper(root -> right, result, currDepth + 1);
+    }
+    
+    if(root -> left){
+        // currDepth++; ---> This changes the vlaue of current depth in current recursion stack
+        // righSideViewHelper(root -> left, result, currDepth);
+        righSideViewHelper(root -> left, result, currDepth + 1);
+        
+    }
+}
+
+vector<int> rightSideView(node* root){
+    vector<int> result;
+    if(!root) return result;
+    int currDepth = 0;
+    righSideViewHelper(root, result, currDepth);
+    
+    for(int val : result){
+        cout << val << " ";
+    }
+    
+    return result;
+}
 
 int main() {
     
@@ -412,17 +447,21 @@ int main() {
     
     // cout << "balanced: " << isTreeBalanced(root) << endl;
     
-    cout << "zig zag traversal: " << endl;
-    vector<vector<int>> result = zigZagTraversal(root);
-    for(int i = 0; i<result.size(); i++){
-        for(int j = 0; j<result[i].size(); j++){
-            cout << result[i][j] << " ";
-        }
-    }
+    // cout << "zig zag traversal: " << endl;
+    // vector<vector<int>> result = zigZagTraversal(root);
+    // for(int i = 0; i<result.size(); i++){
+    //     for(int j = 0; j<result[i].size(); j++){
+    //         cout << result[i][j] << " ";
+    //     }
+    // }
+    
+    cout << "Right side view: " << endl;
+    
+    rightSideView(root);
     
  
     //5 7 1 -1 -1 8 -1 -1 3 -1 2 -1 -1 
-    
+    // 1 2 6 8 -1 -1 -1 -1 3 -1 4 -1 -1
     return 0;
 }
 
