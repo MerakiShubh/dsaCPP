@@ -436,13 +436,68 @@ vector<int> topView(node* root){
     }
     
     for(auto it = m.begin(); it != m.end(); it++){
-        result.push_back(it -> second)
+        result.push_back(it -> second);
         
         cout << it -> second << " ";
     }
     
     
     return result;
+}
+
+int bottomLeft(node* root, int currDepth, int &maxDepth, int &ans){
+    if(!root) return -1;
+
+    if(currDepth > maxDepth){
+        ans = root -> data;
+    }
+    maxDepth = max(currDepth, maxDepth);
+    if(root -> left){
+        bottomLeft(root -> left, currDepth + 1, maxDepth, ans);
+    }
+
+    if(root -> right){
+        bottomLeft(root -> right, currDepth + 1, maxDepth, ans);
+    }
+    return ans;
+}
+
+int findBottomLeftValue(node* root) {
+
+// <----- method - 1 (dfs)  ------>
+
+    // int maxDepth = 0;
+    // int ans = root -> data;
+    // return bottomLeft(root, 0, maxDepth, ans);
+    
+    
+    vector<int> v;
+    queue<node*> q;
+    q.push(root);
+    q.push(nullptr);
+    
+    while(!q.empty()){
+        node* temp = q.front();
+        q.pop();
+        if(temp){
+            v.push_back(temp -> data);
+        }
+        
+        if(!temp){
+            if(!q.empty()){
+                q.push(nullptr);
+                v.clear();
+            }
+        }else{
+            if(temp -> left){
+                q.push(temp -> left);
+            }
+            if(temp -> right){
+                q.push(temp -> right);
+            }
+        }
+    }
+    return v[0];
 }
 
 int main() {
@@ -494,8 +549,10 @@ int main() {
     // cout << "Right side view: " << endl;
     // rightSideView(root);
     
-    cout << "top view: " << endl;
-    topView(root);
+    // cout << "top view: " << endl;
+    // topView(root);
+    
+    cout << "bottomLeft: " << findBottomLeftValue(root) << endl;
     
  
     //5 7 1 -1 -1 8 -1 -1 3 -1 2 -1 -1 
